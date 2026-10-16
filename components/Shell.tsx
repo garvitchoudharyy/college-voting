@@ -34,7 +34,7 @@ export default function Shell({ children }: { children: ReactNode }) {
   return (
     <ToastCtx.Provider value={notify}>
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-[#070d24]/80">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2 font-bold">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-white"><Vote size={18} /></span>
             Campus Vote
@@ -52,11 +52,10 @@ export default function Shell({ children }: { children: ReactNode }) {
         {open && <nav className="flex flex-col gap-1 border-t border-slate-200 p-3 dark:border-white/10 md:hidden">{NAV.map((n) => <Link key={n.href} href={n.href} className={link(n.href)}>{n.label}</Link>)}{voter.ready && (voter.email ? <button onClick={voter.logout} className={`${link("")} text-left`}>Sign out</button> : <Link href="/login" className={link("/login")}>Log in</Link>)}<Link href="/admin" className={link("/admin")}>Admin Login</Link></nav>}
       </header>
       <AnimatePresence mode="wait">
-        <motion.main key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }} className="mx-auto min-h-[70vh] max-w-6xl px-4 py-10">{children}</motion.main>
+        <motion.main key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }} className="mx-auto min-h-[70vh] max-w-7xl px-5 py-12">{children}</motion.main>
       </AnimatePresence>
       <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-500 dark:border-white/10">
-        <p>College mini project. Student demo only, not a secure or official election.</p>
-        <Link href="/admin" className="mt-2 inline-block font-medium text-blue-600 underline dark:text-blue-400">Admin Login</Link>
+        <Link href="/admin" className="inline-block font-medium text-blue-600 underline dark:text-blue-400">Admin Login</Link>
       </footer>
       <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
         {toast && <div role="status" className={`rounded-xl px-5 py-3 text-sm font-medium text-white shadow-xl ${toast.k === "error" ? "bg-red-600" : "bg-emerald-600"}`}>{toast.m}</div>}

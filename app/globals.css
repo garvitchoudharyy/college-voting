@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
+  html { font-size: 112.5%; }
   body { @apply bg-slate-50 text-slate-900 antialiased dark:bg-[#070d24] dark:text-slate-100; }
   :focus-visible { @apply outline outline-2 outline-offset-2 outline-blue-500; }
 }
