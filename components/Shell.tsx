@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useState, ReactNode } from "react";
+import { useVoter } from "@/lib/storage";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, Vote, X } from "lucide-react";
 
@@ -13,6 +14,7 @@ const NAV = [{ href: "/", label: "Home" }, { href: "/vote", label: "Vote" }, { h
 
 export default function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
+  const voter = useVoter();
   const [dark, setDark] = useState(false);
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<{ m: string; k: Kind } | null>(null);
@@ -39,6 +41,7 @@ export default function Shell({ children }: { children: ReactNode }) {
           </Link>
           <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
             {NAV.map((n) => <Link key={n.href} href={n.href} className={link(n.href)} aria-current={path === n.href ? "page" : undefined}>{n.label}</Link>)}
+            {voter.ready && (voter.email ? <button onClick={voter.logout} className={link("")}>Sign out</button> : <Link href="/login" className={link("/login")}>Log in</Link>)}
             <button onClick={flip} className="ml-2 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-white/10" aria-label="Toggle dark mode">{dark ? <Sun size={18} /> : <Moon size={18} />}</button>
           </nav>
           <div className="flex items-center gap-1 md:hidden">
@@ -46,7 +49,7 @@ export default function Shell({ children }: { children: ReactNode }) {
             <button onClick={() => setOpen(!open)} className="rounded-lg p-2" aria-label="Menu" aria-expanded={open}>{open ? <X size={22} /> : <Menu size={22} />}</button>
           </div>
         </div>
-        {open && <nav className="flex flex-col gap-1 border-t border-slate-200 p-3 dark:border-white/10 md:hidden">{NAV.map((n) => <Link key={n.href} href={n.href} className={link(n.href)}>{n.label}</Link>)}<Link href="/admin" className={link("/admin")}>Admin Login</Link></nav>}
+        {open && <nav className="flex flex-col gap-1 border-t border-slate-200 p-3 dark:border-white/10 md:hidden">{NAV.map((n) => <Link key={n.href} href={n.href} className={link(n.href)}>{n.label}</Link>)}{voter.ready && (voter.email ? <button onClick={voter.logout} className={`${link("")} text-left`}>Sign out</button> : <Link href="/login" className={link("/login")}>Log in</Link>)}<Link href="/admin" className={link("/admin")}>Admin Login</Link></nav>}
       </header>
       <AnimatePresence mode="wait">
         <motion.main key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }} className="mx-auto min-h-[70vh] max-w-6xl px-4 py-10">{children}</motion.main>

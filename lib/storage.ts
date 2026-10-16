@@ -4,7 +4,7 @@ import { Candidate, DEFAULT_CANDIDATES, DEFAULT_SETTINGS, Settings, Vote } from 
 import { parseBackup, validCandidates, validSettings, validVotes } from "./validation";
 import { statusOf } from "./election";
 
-const K = { c: "cv:candidates", v: "cv:votes", s: "cv:settings", h: "cv:hasVoted", a: "cv:admin" };
+const K = { c: "cv:candidates", v: "cv:votes", s: "cv:settings", h: "cv:hasVoted", a: "cv:admin", u: "cv:voter" };
 const read = (k: string): unknown => { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch { return null; } };
 const write = (k: string, v: unknown) => { try { localStorage.setItem(k, JSON.stringify(v)); window.dispatchEvent(new Event("cv-change")); return true; } catch { return false; } };
 const del = (k: string) => { try { localStorage.removeItem(k); } catch {} };
@@ -66,5 +66,26 @@ export function useAdmin() {
     try { (remember ? localStorage : sessionStorage).setItem(K.a, JSON.stringify({ email })); window.dispatchEvent(new Event("cv-change")); return true; } catch { return false; }
   };
   const logout = () => { try { sessionStorage.removeItem(K.a); localStorage.removeItem(K.a); } catch {} window.dispatchEvent(new Event("cv-change")); };
+  return { ...st, login, logout };
+}
+
+// Demo-only voter session. NOT real authentication.
+export function useVoter() {
+  const [st, setSt] = useState<{ ready: boolean; email: string | null }>({ ready: false, email: null });
+  useEffect(() => {
+    const load = () => {
+      let email: string | null = null;
+      try { const r = sessionStorage.getItem(K.u) ?? localStorage.getItem(K.u); const p = r ? JSON.parse(r) : null; if (p && typeof p.email === "string") email = p.email; } catch {}
+      setSt({ ready: true, email });
+    };
+    load();
+    window.addEventListener("cv-change", load);
+    window.addEventListener("storage", load);
+    return () => { window.removeEventListener("cv-change", load); window.removeEventListener("storage", load); };
+  }, []);
+  const login = (email: string, remember: boolean) => {
+    try { (remember ? localStorage : sessionStorage).setItem(K.u, JSON.stringify({ email })); window.dispatchEvent(new Event("cv-change")); return true; } catch { return false; }
+  };
+  const logout = () => { try { sessionStorage.removeItem(K.u); localStorage.removeItem(K.u); } catch {} window.dispatchEvent(new Event("cv-change")); };
   return { ...st, login, logout };
 }

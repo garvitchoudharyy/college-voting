@@ -20,6 +20,8 @@ Push the folder to GitHub, then in Vercel choose "Add New Project", import the r
 ## 6. Demo login
 Go to `/admin` (footer link). Any email ending in `@glbtim.ac.in` with any non-empty password is accepted. This only checks the domain; it does NOT verify identity and is not secure.
 
+Voters log in at `/login` with any email ending in `@glbitm.ac.in` and any password (domain check only, not real verification). The voting booth redirects to `/login` until then. Admin uses `@glbtim.ac.in` (see `lib/config.ts` to change either domain).
+
 ## 7. Reset demo data
 Admin > Demo Data Management > Reset votes / candidates / everything (each asks for confirmation).
 

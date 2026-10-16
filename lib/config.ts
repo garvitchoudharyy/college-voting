@@ -19,3 +19,7 @@ export const DEFAULT_CANDIDATES: Candidate[] = [
     manifesto: "Improving facilities, wellbeing and accessibility.",
     promises: ["Better canteen and seating", "Counselling support desk", "Accessible campus routes"] },
 ];
+
+// Allowed email domains (demo check only, not real authentication).
+export const VOTER_DOMAIN = "glbitm.ac.in";
+export const ADMIN_DOMAIN = "glbtim.ac.in";

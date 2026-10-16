@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check, Search } from "lucide-react";
-import { useElection } from "@/lib/storage";
+import { useElection, useVoter } from "@/lib/storage";
 import { statusOf } from "@/lib/election";
 import CandidateCard from "@/components/candidates/CandidateCard";
 import { Modal, useToast } from "@/components/Shell";
@@ -17,8 +18,10 @@ export default function VotePage() {
   const [confirm, setConfirm] = useState(false);
   const [done, setDone] = useState(false);
   const busy = useRef(false);
+  const voter = useVoter(); const router = useRouter();
+  useEffect(() => { if (voter.ready && !voter.email && !done) router.replace("/login"); }, [voter.ready, voter.email, done, router]);
 
-  if (!ready) return <div className="grid gap-4 sm:grid-cols-2"><div className="skeleton h-64" /><div className="skeleton h-64" /></div>;
+  if (!ready || !voter.ready || (!voter.email && !done)) return <div className="grid gap-4 sm:grid-cols-2"><div className="skeleton h-64" /><div className="skeleton h-64" /></div>;
   const chosen = candidates.find((c) => c.id === sel);
 
   if (done) return (
