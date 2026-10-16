@@ -16,7 +16,7 @@ export default function AdminLogin() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isAdminEmail(email)) return setErr("Use an email ending in @glbtim.ac.in.");
+    if (!isAdminEmail(email)) return setErr("Use an email ending in @glbitm.ac.in.");
     if (!pw) return setErr("Enter a password.");
     setErr(""); setBusy(true);
     setTimeout(() => {
@@ -28,7 +28,7 @@ export default function AdminLogin() {
     <form onSubmit={submit} className="card mx-auto max-w-md space-y-4" noValidate>
       <h1 className="text-2xl font-bold">Admin login</h1>
       <p className="flex gap-2 rounded-xl bg-amber-500/10 p-3 text-sm text-amber-700 dark:text-amber-400"><ShieldAlert size={18} className="shrink-0" />Demo authentication: only the email domain is checked and any password works. This does not verify who you are.</p>
-      <div><label htmlFor="e" className="mb-1 block text-sm font-medium">Email</label><input id="e" type="email" className="input" value={email} onChange={(x) => setEmail(x.target.value)} placeholder="name@glbtim.ac.in" autoComplete="email" /></div>
+      <div><label htmlFor="e" className="mb-1 block text-sm font-medium">Email</label><input id="e" type="email" className="input" value={email} onChange={(x) => setEmail(x.target.value)} placeholder="name@glbitm.ac.in" autoComplete="email" /></div>
       <div><label htmlFor="p" className="mb-1 block text-sm font-medium">Password</label>
         <div className="relative"><input id="p" type={show ? "text" : "password"} className="input pr-11" value={pw} onChange={(x) => setPw(x.target.value)} autoComplete="current-password" />
           <button type="button" onClick={() => setShow(!show)} className="absolute right-3 top-3" aria-label={show ? "Hide password" : "Show password"}>{show ? <EyeOff size={18} /> : <Eye size={18} />}</button></div></div>

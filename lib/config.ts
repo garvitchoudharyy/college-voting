@@ -22,4 +22,4 @@ export const DEFAULT_CANDIDATES: Candidate[] = [
 
 // Allowed email domains (demo check only, not real authentication).
 export const VOTER_DOMAIN = "glbitm.ac.in";
-export const ADMIN_DOMAIN = "glbtim.ac.in";
+export const ADMIN_DOMAIN = "glbitm.ac.in";

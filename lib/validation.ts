@@ -1,5 +1,5 @@
 import type { Candidate, Settings, Vote } from "./config";
-export const isAdminEmail = (e: string) => /^[^\s@]+@glbtim\.ac\.in$/i.test(e.trim());
+export const isAdminEmail = (e: string) => /^[^\s@]+@glbitm\.ac\.in$/i.test(e.trim());
 export const isVoterEmail = (e: string) => /^[^\s@]+@glbitm\.ac\.in$/i.test(e.trim());
 const s = (x: unknown): x is string => typeof x === "string";
 const o = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null;
